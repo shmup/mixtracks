@@ -27,16 +27,19 @@ function getTrackMetadata($filePath)
     ];
 }
 
-function renderTrack($file, $metadata)
+function renderTrack($fileName, $metadata)
 {
-    $track = clean(removeLeadingTrackNumber($file));
+    if (empty($metadata["title"])) {
+      return '\t<li>' . removeLeadingTrackNumber($fileName) . '</li>';
+    }
+
     $title = clean($metadata["title"]);
     $artist = clean($metadata["artist"]);
     $album = clean($metadata["album"]);
     $year = clean($metadata["year"]);
 
     return <<<HTML
-\t<li>$track - $title by $artist ($album, $year)</li>\r\n
+\t<li>$title by $artist ($album, $year)</li>\r\n
 HTML;
 }
 
