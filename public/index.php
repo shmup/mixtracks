@@ -8,6 +8,11 @@ function removeLeadingTrackNumber($track)
     return preg_replace("/^\d{2} - /", "", $track);
 }
 
+function clean($string)
+{
+    return htmlspecialchars($string);
+}
+
 function getTrackMetadata($filePath)
 {
     $getID3 = new getID3();
@@ -22,26 +27,32 @@ function getTrackMetadata($filePath)
     ];
 }
 
+function renderTrack($file, $metadata)
+{
+    return "<li>" .
+        clean(removeLeadingTrackNumber($file)) .
+        " - " .
+        clean($metadata["title"]) .
+        " by " .
+        clean($metadata["artist"]) .
+        " (" .
+        clean($metadata["album"]) .
+        ", " .
+        clean($metadata["year"]) .
+        ")" .
+        "</li>";
+}
+
 if (is_dir($directory)) {
     $files = scandir($directory);
     echo "<ol>";
     foreach ($files as $file) {
-        if ($file !== "." && $file !== "..") {
-            $filePath = $directory . DIRECTORY_SEPARATOR . $file;
-            $metadata = getTrackMetadata($filePath);
-            echo "<li>" .
-                htmlspecialchars(removeLeadingTrackNumber($file)) .
-                " - " .
-                htmlspecialchars($metadata["title"]) .
-                " by " .
-                htmlspecialchars($metadata["artist"]) .
-                " (" .
-                htmlspecialchars($metadata["album"]) .
-                ", " .
-                htmlspecialchars($metadata["year"]) .
-                ")" .
-                "</li>";
+        if ($file == "." || $file == "..") {
+            continue;
         }
+        $filePath = $directory . DIRECTORY_SEPARATOR . $file;
+        $metadata = getTrackMetadata($filePath);
+        echo renderTrack($file, $metadata);
     }
     echo "</ol>";
 } else {
