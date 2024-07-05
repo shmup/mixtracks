@@ -29,18 +29,17 @@ function getTrackMetadata($filePath)
 
 function renderTrack($file, $metadata)
 {
-    return "<li>" .
-        clean(removeLeadingTrackNumber($file)) .
-        " - " .
-        clean($metadata["title"]) .
-        " by " .
-        clean($metadata["artist"]) .
-        " (" .
-        clean($metadata["album"]) .
-        ", " .
-        clean($metadata["year"]) .
-        ")" .
-        "</li>";
+    $track = clean(removeLeadingTrackNumber($file));
+    $title = clean($metadata["title"]);
+    $artist = clean($metadata["artist"]);
+    $album = clean($metadata["album"]);
+    $year = clean($metadata["year"]);
+
+    return <<<HTML
+<li>
+    $track - $title by $artist ($album, $year)
+</li>
+HTML;
 }
 
 if (is_dir($directory)) {
