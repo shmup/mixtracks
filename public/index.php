@@ -3,6 +3,11 @@
 $directory = "tracks";
 $cacheFile = "metadata_cache.json";
 
+function listen($path, $text)
+{
+    return "<a href=\"$path\">$text</a>";
+}
+
 function renderTrack($fileName, $metadata)
 {
     if (empty($metadata["title"])) {
@@ -14,7 +19,9 @@ function renderTrack($fileName, $metadata)
     $album = clean($metadata["album"]);
     $year = clean($metadata["year"]);
 
-    return "\t<li>$title by $artist ($album, $year)</li>\r\n";
+    return "\t<li>" .
+        listen("tracks/$fileName", $title) .
+        " by $artist from $album ($year)</li>";
 }
 
 function renderTemplate($trackHtml)
