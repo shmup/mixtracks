@@ -11,10 +11,24 @@ Caddy configuration
 
     mixtracks {
         root * /var/www/html/mixtracks
-        encode gzip
         tls shmup@xom.world
         php_fastcgi unix//run/php-fpm/www.sock
-        file_server
+        log {
+            output file /var/log/caddy/mixtracks.log {
+                roll_size 10mb
+                roll_keep 20
+                roll_keep_for 720h
+            }
+        }
+    }
+
+If using docker you just need a reverse proxy:
+
+.. code-block:: caddyfile
+
+    mixtracks {
+        reverse_proxy :8000
+        tls shmup@smell.flowers
         log {
             output file /var/log/caddy/mixtracks.log {
                 roll_size 10mb
