@@ -36,9 +36,7 @@ function renderTrack($file, $metadata)
     $year = clean($metadata["year"]);
 
     return <<<HTML
-<li>
-    $track - $title by $artist ($album, $year)
-</li>
+\t<li>$track - $title by $artist ($album, $year)</li>\r\n
 HTML;
 }
 
@@ -63,7 +61,7 @@ HTML;
 
 if (is_dir($directory)) {
     $files = scandir($directory);
-    $trackHtml = "<ol>\r\n\t";
+    $trackHtml = "<ol>\r\n";
     foreach ($files as $file) {
         if ($file == "." || $file == "..") {
             continue;
@@ -72,7 +70,7 @@ if (is_dir($directory)) {
         $metadata = getTrackMetadata($filePath);
         $trackHtml .= renderTrack($file, $metadata);
     }
-    $trackHtml .= "</ol>";
+    $trackHtml .= "\r\n</ol>";
     echo renderTemplate($trackHtml);
 } else {
     echo renderTemplate("no tracks");
