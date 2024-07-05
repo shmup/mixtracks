@@ -5,6 +5,7 @@ build:
 
 up:
     docker-compose up -d
+    just logs
 
 down:
     docker-compose down
