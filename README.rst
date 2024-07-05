@@ -3,6 +3,15 @@ Mixtracks
 
 Drop-in script to provide a frontend for playing a directory of mp3 files.
 
+Development
+-----------
+
+Available commands: ``build``, ``up``, ``down``, ``logs``, ``shell``
+
+.. code-block:: bash
+
+    just build
+    just up
 
 Caddy configuration
 -------------------
