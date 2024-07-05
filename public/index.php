@@ -1,5 +1,4 @@
 <?php
-require_once "/usr/src/php/getID3/getid3/getid3.php";
 
 $directory = "tracks";
 
@@ -11,6 +10,35 @@ function removeLeadingTrackNumber($track)
 function clean($string)
 {
     return htmlspecialchars($string);
+}
+
+function getMP3Metadata($filePath)
+{
+    $metadata = [];
+
+    if (!file_exists($filePath)) {
+        return $metadata;
+    }
+
+    $file = fopen($filePath, "rb");
+    if (!$file) {
+        return $metadata;
+    }
+
+    fseek($file, -128, SEEK_END);
+    $tag = fread($file, 128);
+    fclose($file);
+
+    if (substr($tag, 0, 3) == "TAG") {
+        $metadata["title"] = trim(substr($tag, 3, 30));
+        $metadata["artist"] = trim(substr($tag, 33, 30));
+        $metadata["album"] = trim(substr($tag, 63, 30));
+        $metadata["year"] = trim(substr($tag, 93, 4));
+        $metadata["comment"] = trim(substr($tag, 97, 30));
+        $metadata["genre"] = ord(substr($tag, 127, 1));
+    }
+
+    return $metadata;
 }
 
 function getTrackMetadata($filePath)
@@ -30,7 +58,7 @@ function getTrackMetadata($filePath)
 function renderTrack($fileName, $metadata)
 {
     if (empty($metadata["title"])) {
-      return '\t<li>' . removeLeadingTrackNumber($fileName) . '</li>';
+        return '\t<li>' . removeLeadingTrackNumber($fileName) . "</li>";
     }
 
     $title = clean($metadata["title"]);
@@ -70,7 +98,7 @@ if (is_dir($directory)) {
             continue;
         }
         $filePath = $directory . DIRECTORY_SEPARATOR . $file;
-        $metadata = getTrackMetadata($filePath);
+        $metadata = getMP3Metadata($filePath);
         $trackHtml .= renderTrack($file, $metadata);
     }
     $trackHtml .= "\r\n</ol>";
