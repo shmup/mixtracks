@@ -14,9 +14,7 @@ function renderTrack($fileName, $metadata)
     $album = clean($metadata["album"]);
     $year = clean($metadata["year"]);
 
-    return <<<HTML
-\t<li>$title by $artist ($album, $year)</li>\r\n
-HTML;
+    return "\t<li>$title by $artist ($album, $year)</li>\r\n";
 }
 
 function renderTemplate($trackHtml)
