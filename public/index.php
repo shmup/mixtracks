@@ -42,19 +42,39 @@ function renderTrack($file, $metadata)
 HTML;
 }
 
+function renderTemplate($trackHtml)
+{
+    return <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title></title>
+  <style></style>
+</head>
+<body>
+  $trackHtml
+  <script></script>
+</body>
+</html>
+HTML;
+}
+
 if (is_dir($directory)) {
     $files = scandir($directory);
-    echo "<ol>";
+    $trackHtml = "<ol>\r\n\t";
     foreach ($files as $file) {
         if ($file == "." || $file == "..") {
             continue;
         }
         $filePath = $directory . DIRECTORY_SEPARATOR . $file;
         $metadata = getTrackMetadata($filePath);
-        echo renderTrack($file, $metadata);
+        $trackHtml .= renderTrack($file, $metadata);
     }
-    echo "</ol>";
+    $trackHtml .= "</ol>";
+    echo renderTemplate($trackHtml);
 } else {
-    echo "no tracks";
+    echo renderTemplate("no tracks");
 }
 ?>
