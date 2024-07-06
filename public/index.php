@@ -39,7 +39,7 @@ $styles = <<<HTML
     }
     .track-nav {
       background-color: rgba(255, 255, 255, 0);
-      display: flex;
+      display: none;
       opacity: 97%;
       padding: 8px;
       position: -webkit-sticky;
@@ -55,6 +55,8 @@ $javascript = <<<HTML
 <script>
 const audioPlayer = document.getElementById('player');
 let trackElements = document.querySelectorAll('#tracks li a');
+
+document.querySelector('.track-nav').style.display = 'flex';
 
 function updateTrackElements() {
     trackElements = document.querySelectorAll('#tracks li a');
