@@ -5,35 +5,35 @@ $cacheFile = "metadata_cache.json";
 
 $styles = <<<HTML
   <style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-  #tracks { margin-top: 0; }
-  a { cursor: pointer; }
-  .highlighted {
-    background-color: yellow;
-  }
-  .track-nav {
-    display: flex;
-    user-select: none;
-  }
-  .track-item {
-    margin-right: 10px;
-    padding: 2px 4px;
-    border: 2px solid #d4d0c8;
-    background: #e4e4e4;
-    box-shadow: 2px 2px 5px #808080, -2px -2px 5px #ffffff;
-  }
-  .track-item:hover {
-    background: pink;
-    border: 2px solid #ffb6c1;
-    box-shadow: 2px 2px 5px #ffb6c1, -2px -2px 5px #ffffff;
-  }
-  .track-item:active {
-    background: #c0c0c0;
-    border: 2px solid #d4d0c8;
-    box-shadow: inset 2px 2px 5px #808080, inset -2px -2px 5px #ffffff;
-  }
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #tracks { margin-top: 0; }
+    a { cursor: pointer; }
+    .highlighted {
+      background-color: yellow;
+    }
+    .track-nav {
+      display: flex;
+      user-select: none;
+    }
+    .track-item {
+      margin-right: 10px;
+      padding: 2px 4px;
+      border: 2px solid #d4d0c8;
+      background: #e4e4e4;
+      box-shadow: 2px 2px 5px #808080, -2px -2px 5px #ffffff;
+    }
+    .track-item:hover {
+      background: pink;
+      border: 2px solid #ffb6c1;
+      box-shadow: 2px 2px 5px #ffb6c1, -2px -2px 5px #ffffff;
+    }
+    .track-item:active {
+      background: #c0c0c0;
+      border: 2px solid #d4d0c8;
+      box-shadow: inset 2px 2px 5px #808080, inset -2px -2px 5px #ffffff;
+    }
   </style>
 HTML;
 
@@ -97,7 +97,12 @@ function getCurrentTrackIndex() {
 
 function playTrackByOffset(offset) {
     const currentIndex = getCurrentTrackIndex();
-    const newIndex = (currentIndex + offset + trackElements.length) % trackElements.length;
+
+    // handle special case where no track is currently playing
+    const newIndex = currentIndex === -1 
+        ? (offset === -1 ? trackElements.length - 1 : 0) 
+        : (currentIndex + offset + trackElements.length) % trackElements.length;
+
     playTrack(trackElements[newIndex].getAttribute('href'));
 }
 
