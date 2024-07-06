@@ -131,11 +131,11 @@ function playPrevTrack() {
 audioPlayer.addEventListener('ended', playNextTrack);
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll("#tracks a").forEach(link => {
-        link.addEventListener("click", function(event) {
+    document.body.addEventListener("click", function(event) {
+        if (event.target.tagName === 'A' && event.target.closest('#tracks')) {
             event.preventDefault();
-            playTrack(link.href);
-        });
+            playTrack(event.target.href);
+        }
     });
     updateTrackElements();
 });
