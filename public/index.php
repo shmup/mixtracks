@@ -16,6 +16,7 @@ $styles = <<<HTML
     .track-nav {
       display: flex;
       user-select: none;
+      margin-bottom: 20px;
     }
     .track-item {
       margin-right: 10px;
@@ -61,7 +62,7 @@ function updatePageWithTrackTitle() {
 function stopTrack() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
-    resetPageTitle();
+    resetHighlight();
 }
 
 function updateTrackElements() {
@@ -69,9 +70,17 @@ function updateTrackElements() {
 }
 
 function highlight(element) {
-    document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
+    resetHighlight();
     element.parentElement.classList.add('highlighted');
 }
+
+function resetHighlight() {
+    document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
+}
+
+audioPlayer.addEventListener('pause', function() {
+    resetPageTitle();
+});
 
 audioPlayer.addEventListener('play', function() {
     highlight(trackElements[getCurrentTrackIndex()]);
@@ -139,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     updateTrackElements();
 });
+
 </script>
 HTML;
 
@@ -150,7 +160,8 @@ function listen($path, $text)
 function renderTrack($fileName, $metadata)
 {
     if (empty($metadata["title"])) {
-        return "\t<li>" . removeLeadingTrackNumber($fileName) . "</li>";
+        $cleanFileName = removeLeadingTrackNumber($fileName);
+        return "\t<li>" . listen("tracks/$fileName", $cleanFileName) . "</li>\r\n";
     }
 
     $title = clean($metadata["title"]);
@@ -179,18 +190,10 @@ function renderTemplate($trackHtml)
 </head>
 <body>
   <div class="track-nav">
-    <p class="track-item">
-      <a onClick="playPrevTrack()">Prev</a>
-    </p>
-    <p class="track-item">
-      <a onClick="playNextTrack()">Next</a>
-    </p>
-    <p class="track-item">
-      <a onClick="shuffleTracks()">Shuffle</a>
-    </p>
-    <p class="track-item">
-      <a onClick="stopTrack()">Stop</a>
-    </p>
+      <a class="track-item" onClick="playPrevTrack()">Prev</a>
+      <a class="track-item" onClick="playNextTrack()">Next</a>
+      <a class="track-item" onClick="shuffleTracks()">Shuffle</a>
+      <a class="track-item" onClick="stopTrack()">Stop</a>
   </div>
   $trackHtml
   <audio id="player" class="hidden"></audio>
