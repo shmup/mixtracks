@@ -3,7 +3,9 @@ Mixtracks
 
 Drop-in script to provide a frontend for playing a directory of mp3 files.
 
-Development
+This requires a ``./public/tracks`` directory of mp3s. Currently parses id3v1 tags.
+
+Setting up
 -----------
 
 Available commands: ``build``, ``up``, ``down``, ``logs``, ``shell``
