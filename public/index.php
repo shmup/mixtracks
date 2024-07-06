@@ -170,7 +170,9 @@ function renderTrack($fileName, $metadata)
 {
     if (empty($metadata["title"])) {
         $cleanFileName = removeLeadingTrackNumber($fileName);
-        return "\t<li>" . listen("tracks/$fileName", $cleanFileName) . "</li>\r\n";
+        return "\t<li>" .
+            listen("tracks/$fileName", $cleanFileName) .
+            "</li>\r\n";
     }
 
     $title = clean($metadata["title"]);
@@ -298,5 +300,3 @@ if (is_dir($directory)) {
 } else {
     echo renderTemplate("no tracks");
 }
-
-?>
