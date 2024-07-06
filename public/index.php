@@ -162,10 +162,10 @@ function renderTemplate($trackHtml, $styles, $javascript)
 </head>
 <body>
   <div class="track-nav">
-      <a class="track-item">Prev</a>
-      <a class="track-item">Next</a>
-      <a class="track-item">Shuffle</a>
-      <a class="track-item">Stop</a>
+    <a class="track-item">Prev</a>
+    <a class="track-item">Next</a>
+    <a class="track-item">Shuffle</a>
+    <a class="track-item">Stop</a>
   </div>
   $trackHtml
   <audio id="player" class="hidden"></audio>
