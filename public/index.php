@@ -7,6 +7,8 @@ $styles = <<<HTML
   <style>
     body {
       font-family: Arial, sans-serif;
+      padding: 0;
+      margin: 0;
     }
     #tracks { margin-top: 0; }
     a { cursor: pointer; }
@@ -14,9 +16,15 @@ $styles = <<<HTML
       background-color: yellow;
     }
     .track-nav {
+      padding: 8px;
       display: flex;
       user-select: none;
-      margin-bottom: 20px;
+      position: -webkit-sticky; /* for safari */
+      position: sticky;
+      opacity: 97%;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0);
+      z-index: 1000;
     }
     .track-item {
       margin-right: 10px;
