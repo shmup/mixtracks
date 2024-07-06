@@ -49,9 +49,19 @@ function scrollToTrack() {
     }
 }
 
+function resetPageTitle() {
+    document.title = 'Mixtracks';
+}
+
+function updatePageWithTrackTitle() {
+    const currentTrack = trackElements[getCurrentTrackIndex()];
+    document.title = currentTrack.textContent;
+}
+
 function stopTrack() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
+    resetPageTitle();
 }
 
 function updateTrackElements() {
@@ -61,11 +71,12 @@ function updateTrackElements() {
 function highlight(element) {
     document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
     element.parentElement.classList.add('highlighted');
-    scrollToTrack();
 }
 
 audioPlayer.addEventListener('play', function() {
     highlight(trackElements[getCurrentTrackIndex()]);
+    scrollToTrack();
+    updatePageWithTrackTitle();
 });
 
 audioPlayer.addEventListener('ended', function() {
