@@ -34,6 +34,7 @@ $styles = <<<HTML
       background: #c0c0c0;
       border: 2px solid #d4d0c8;
       box-shadow: inset 2px 2px 5px #808080, inset -2px -2px 5px #ffffff;
+      -webkit-tap-highlight-color: transparent;
     }
   </style>
 HTML;
