@@ -42,6 +42,13 @@ $javascript = <<<HTML
 const audioPlayer = document.getElementById('player');
 let trackElements = document.querySelectorAll('#tracks li a');
 
+function scrollToTrack() {
+    const highlighted = document.querySelector('.highlighted');
+    if (highlighted) {
+        highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
 function stopTrack() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
@@ -54,6 +61,7 @@ function updateTrackElements() {
 function highlight(element) {
     document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
     element.parentElement.classList.add('highlighted');
+    scrollToTrack();
 }
 
 audioPlayer.addEventListener('play', function() {
