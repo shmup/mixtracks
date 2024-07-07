@@ -19,6 +19,9 @@ $styles = <<<HTML
     #tracks {
       margin-top: 0;
     }
+    #tracks li {
+      margin-bottom: 5px;
+    }
     .track-item {
       background: #e4e4e4;
       border: 2px solid #d4d0c8;
@@ -41,7 +44,7 @@ $styles = <<<HTML
       background-color: rgba(255, 255, 255, 0);
       display: none;
       opacity: 97%;
-      padding: 8px;
+      padding: 10px;
       position: -webkit-sticky;
       position: sticky;
       top: 0;
@@ -80,8 +83,8 @@ function playTrack(src) {
 
 function playTrackByOffset(offset) {
     const currentIndex = getCurrentTrackIndex();
-    const newIndex = currentIndex === -1 
-        ? (offset === -1 ? trackElements.length - 1 : 0) 
+    const newIndex = currentIndex === -1
+        ? (offset === -1 ? trackElements.length - 1 : 0)
         : (currentIndex + offset + trackElements.length) % trackElements.length;
     playTrack(trackElements[newIndex].getAttribute('href'));
 }
